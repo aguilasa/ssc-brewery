@@ -91,7 +91,7 @@ public class BeerRestController {
     }
 
     @PostMapping(path = "beer")
-    public ResponseEntity saveNewBeer(@Valid @RequestBody BeerDto beerDto){
+    public ResponseEntity<Void> saveNewBeer(@Valid @RequestBody BeerDto beerDto){
 
         BeerDto savedDto = beerService.saveBeer(beerDto);
 
@@ -100,11 +100,11 @@ public class BeerRestController {
         //todo hostname for uri
         httpHeaders.add("Location", "/api/v1/beer_service/" + savedDto.getId().toString());
 
-        return new ResponseEntity(httpHeaders, HttpStatus.CREATED);
+        return new ResponseEntity<>(httpHeaders, HttpStatus.CREATED);
     }
 
     @PutMapping(path = {"beer/{beerId}"}, produces = { "application/json" })
-    public ResponseEntity updateBeer(@PathVariable("beerId") UUID beerId, @Valid @RequestBody BeerDto beerDto){
+    public ResponseEntity<Void> updateBeer(@PathVariable("beerId") UUID beerId, @Valid @RequestBody BeerDto beerDto){
 
         beerService.updateBeer(beerId, beerDto);
 
